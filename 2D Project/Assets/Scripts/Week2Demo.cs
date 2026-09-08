@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class Week2Demo : MonoBehaviour
 {
+    [SerializeField]
+    private SpriteRenderer sRend;
+
+    [SerializeField]
+    private Color tintColor;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Debug.Log("Hello World");
+        //sRend = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -20,11 +26,12 @@ public class Week2Demo : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("enter");
+        //SpriteRenderer sRend = GetComponent<SpriteRenderer>();
+        sRend.color = tintColor;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("exit");
+        sRend.color = Color.white;
     }
 }
