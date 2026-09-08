@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BallSpawner : MonoBehaviour
 {
@@ -13,11 +14,23 @@ public class BallSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SpriteRenderer ballRenderer = Instantiate(ballPrefab, transform.position, Quaternion.identity);
-        ballRenderer.color = 
+
+    }
+
+    public void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
+            mousePos.z = 10;
+            SpawnBallAtPosition(mousePos);
+        }
+    }
+
+    void SpawnBallAtPosition(Vector3 pos)
+    {
+        SpriteRenderer ballRenderer = Instantiate(ballPrefab, pos, Quaternion.identity);
+        ballRenderer.color =
             new Color(Random.Range(0.1f, 1), Random.Range(0.1f, 1), Random.Range(0.1f, 1));
-
-
-        Destroy(ballRenderer.gameObject);
     }
 }
