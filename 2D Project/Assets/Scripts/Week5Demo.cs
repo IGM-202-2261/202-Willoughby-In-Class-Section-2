@@ -24,7 +24,7 @@ public class Week5Demo : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Vector2 myVector = new Vector2(1f, 1f);
+        Vector2 myVector = new Vector2(1f, 3f);
         Vector2 otherVector = new Vector2(1.5f, 0.5f);
 
         Gizmos.color = Color.green;
@@ -36,10 +36,10 @@ public class Week5Demo : MonoBehaviour
         Gizmos.color = Color.white;
 
         Gizmos.DrawLine(Vector2.zero, myVector - otherVector);
-        //Gizmos.DrawLine(Vector2.zero, myVector - otherVector); //order matters here
-        //
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawLine(Vector2.zero, otherVector - myVector);
+        Gizmos.DrawLine(Vector2.zero, myVector - otherVector); //order matters here
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(Vector2.zero, otherVector - myVector);
 
         //Gizmos.DrawLine(Vector2.zero, myVector / 2.0f);
 
