@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Week5Demo : MonoBehaviour
 {
@@ -15,6 +16,16 @@ public class Week5Demo : MonoBehaviour
         //if(useNormalized)
         //{
             transform.position += velocity * Time.deltaTime;
+
+        if (transform.position.x > 5 && transform.position.x < 5.1)
+        {
+            ScoreManager.Instance.AddPoints(1);
+        }
+
+        if(transform.position.x > 7)
+        {
+            SceneManager.LoadScene("Week2");
+        }
         //}
         //else
         //{

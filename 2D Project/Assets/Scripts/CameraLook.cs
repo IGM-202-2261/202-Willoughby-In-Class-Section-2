@@ -15,5 +15,6 @@ public class CameraLook : MonoBehaviour
     public void OnLook(InputAction.CallbackContext ctx)
     {
         lookMovement = ctx.ReadValue<Vector2>();
+        ScoreManager.Instance.AddPoints(1);
     }
 }

@@ -4,11 +4,14 @@ public class ProximitySensor : MonoBehaviour
 {
 #if UNITY_EDITOR
     [SerializeField] private CircleCollider2D col;
+
     private Color gizmoColor = Color.white;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         gizmoColor = Color.red;
+        ScoreManager.Instance.AddPoints(1);
+        Debug.Log(ScoreManager.Instance.Score);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
