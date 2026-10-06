@@ -33,4 +33,12 @@ public class BallSpawner : MonoBehaviour
         ballRenderer.color =
             new Color(Random.Range(0.1f, 1), Random.Range(0.1f, 1), Random.Range(0.1f, 1));
     }
+
+    public void SpawnBallsAtCenter(int numBalls)
+    {
+        for (int i = 0; i < numBalls; i++)
+        {
+            SpawnBallAtPosition(Vector3.zero);
+        }
+    }
 }
