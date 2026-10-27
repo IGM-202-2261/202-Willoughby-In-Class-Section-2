@@ -4,11 +4,14 @@ public class Seeker : Agent
 {
     [SerializeField] private GameObject target;
     [SerializeField] private GameObject fleeTarget;
+    [SerializeField] private Agent evadeTarget;
 
     [SerializeField, Range(0, 10)] private float seekTargetWeight = 1f;
     [SerializeField, Range(0, 10)] private float fleeTargetWeight = 1f;
     [SerializeField, Range(0, 10)] private float stayInBoundsWeight = 1f;
+    [SerializeField, Range(0, 10)] private float evadeWeight = 1f;
     [SerializeField] private float stayInBoundsLookAhead = 0.5f;
+    [SerializeField] private float evadeLookAhead = 0.5f;
 
     private Vector3 totalForce;
 
@@ -19,6 +22,7 @@ public class Seeker : Agent
         totalForce += Seek(target) * seekTargetWeight;
         totalForce += Flee(fleeTarget) * fleeTargetWeight;
         totalForce += StayInBounds(stayInBoundsLookAhead) * stayInBoundsWeight;
+        totalForce += Evade(evadeTarget, evadeLookAhead) * evadeWeight;
 
         return totalForce;
     }
@@ -33,6 +37,6 @@ public class Seeker : Agent
         //Gizmos.color = Color.green;
         //Gizmos.DrawLine(posPlusVelocity, posPlusVelocity + totalForce);
 
-        Gizmos.DrawSphere(CalcFuturePosition(stayInBoundsLookAhead), 0.3f);
+        Gizmos.DrawSphere(CalcFuturePosition(4), 0.3f);
     }
 }

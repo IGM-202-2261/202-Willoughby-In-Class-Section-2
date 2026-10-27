@@ -11,6 +11,8 @@ public abstract class Agent : MonoBehaviour
 
     [SerializeField] private Vector3 worldBounds;
 
+    public Vector3 Velocity { get { return velocity; } }
+
     protected abstract Vector3 CalcSteering();
 
     private void FixedUpdate()
@@ -76,6 +78,19 @@ public abstract class Agent : MonoBehaviour
 
         return Vector3.zero;
     }
+
+    protected Vector3 Pursue(Agent pursueTarget, float seconds)
+    {
+        Vector3 futurePos = pursueTarget.CalcFuturePosition(seconds);
+        return Seek(futurePos);
+    }
+
+    protected Vector3 Evade(Agent evadeTarget, float seconds)
+    {
+        Vector3 futurePos = evadeTarget.CalcFuturePosition(seconds);
+        return Flee(futurePos);
+    }
+
 
 
     public void OnDrawGizmosSelected()
