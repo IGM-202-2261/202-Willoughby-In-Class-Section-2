@@ -36,6 +36,26 @@ public class FlockCoordinator : MonoBehaviour
         AveragePosition /= flock.Count;
     }
 
+    public Agent[] GetNearby(Agent me, float radius)
+    {
+        List<Agent> nearbySet = new List<Agent>();
+
+        for(int i = 0; i < flock.Count; i++)
+        {
+            if (flock[i] == me) continue;
+
+            float distance = Vector2.Distance(
+                me.transform.position, flock[i].transform.position);
+
+            if(distance <= radius)
+            {
+                nearbySet.Add(flock[i]);
+            }
+        }
+
+        return nearbySet.ToArray();
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

@@ -11,6 +11,9 @@ public abstract class Agent : MonoBehaviour
 
     [SerializeField] private Vector3 worldBounds;
 
+    private Vector3 wanderTarget;
+    private Quaternion nextRotation;
+
     public Vector3 Velocity { get { return velocity; } }
 
     protected abstract Vector3 CalcSteering();
@@ -25,7 +28,17 @@ public abstract class Agent : MonoBehaviour
         velocity += acceleration * Time.fixedDeltaTime;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
+        //if(velocity.magnitude != 0)
+        //{
+        //    nextRotation = Quaternion.LookRotation(velocity, Vector3.forward);
+        //}
+
         Vector3 nextPosition = transform.position + velocity * Time.fixedDeltaTime;
+
+        //nextRotation = transform.rotation.eulerAngles;
+        //Vector3 rot = transform.rotation.eulerAngles;
+        //rot.z = Vector3.Angle(Vector3.right, velocity);
+        //transform.rotation = Quaternion.;
         rBody.MovePosition(nextPosition);
     }
 
@@ -91,6 +104,46 @@ public abstract class Agent : MonoBehaviour
         return Flee(futurePos);
     }
 
+    protected Vector3 Alignment(Vector3 targetVelocity, bool clampToMaxSpeed = false)
+    {
+        if (clampToMaxSpeed)
+        {
+            targetVelocity = Vector3.ClampMagnitude(targetVelocity, maxSpeed);
+        }
+
+        return targetVelocity - velocity;
+    }
+
+    protected Vector3 Separate(Agent[] nearby, float distance)
+    {
+        Vector3 separateForce = Vector3.zero;
+
+        for(int i = 0; i < nearby.Length; i++)
+        {
+            float distToNearby = Vector2.Distance
+                (transform.position, nearby[i].transform.position);
+
+            //float scale = distance / distToNearby;
+            float scale = 1 - distToNearby / distance;
+
+            separateForce += Flee(nearby[i].transform.position) * scale;
+        }
+
+        separateForce = Vector3.ClampMagnitude(separateForce, maxSpeed);
+        return separateForce;
+    }
+
+    protected Vector3 Wander(float jitterSpeed, float radius, float ahead)
+    {
+        Vector3 wanderCenter = CalcFuturePosition(ahead);
+
+        wanderTarget.x += Random.Range(-jitterSpeed, jitterSpeed);
+        wanderTarget.y += Random.Range(-jitterSpeed, jitterSpeed);
+        wanderTarget = wanderTarget.normalized * radius;
+
+        Vector3 wanderPoint = wanderCenter + wanderTarget;
+        return Seek(wanderPoint);
+    }
 
 
     public void OnDrawGizmosSelected()
