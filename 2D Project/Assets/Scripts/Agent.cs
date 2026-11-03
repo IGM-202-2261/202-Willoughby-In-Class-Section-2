@@ -12,7 +12,9 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] private Vector3 worldBounds;
 
     private Vector3 wanderTarget;
-    private Quaternion nextRotation;
+
+    //For 3D rotation
+    //private Quaternion nextRotation;
 
     public Vector3 Velocity { get { return velocity; } }
 
@@ -28,18 +30,23 @@ public abstract class Agent : MonoBehaviour
         velocity += acceleration * Time.fixedDeltaTime;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
-        //if(velocity.magnitude != 0)
-        //{
-        //    nextRotation = Quaternion.LookRotation(velocity, Vector3.forward);
-        //}
+        if(velocity.magnitude != 0)
+        {
+            //3D rotation
+            //nextRotation = Quaternion.LookRotation(velocity, Vector3.up);
+
+            //2D rotation
+            float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+            rBody.MoveRotation(angle);
+        }
 
         Vector3 nextPosition = transform.position + velocity * Time.fixedDeltaTime;
 
-        //nextRotation = transform.rotation.eulerAngles;
-        //Vector3 rot = transform.rotation.eulerAngles;
-        //rot.z = Vector3.Angle(Vector3.right, velocity);
-        //transform.rotation = Quaternion.;
+        //2D
         rBody.MovePosition(nextPosition);
+
+        //3D
+        //rBody.Move(nextPosition, nextRotation);
     }
 
     //Helpers

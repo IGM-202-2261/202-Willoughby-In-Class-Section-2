@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlockCoordinator
   agentPrefab: {fileID: 6187980864634863083, guid: 3f8368b34a447e544ac1b874fd4a5893, type: 3}
-  numAgents: 10
+  numAgents: 100
 --- !u!4 &1192161310
 Transform:
   m_ObjectHideFlags: 0
