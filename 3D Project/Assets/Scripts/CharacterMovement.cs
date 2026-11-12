@@ -9,18 +9,15 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 velocity = userInput * moveSpeed * Time.fixedDeltaTime;
-
         Vector3 pos = transform.position;
-        pos += userInput;
+        pos += transform.forward * userInput.y * moveSpeed * Time.fixedDeltaTime;
+        pos += transform.right * userInput.x * moveSpeed * Time.fixedDeltaTime;
         transform.position = pos;
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
         userInput = ctx.ReadValue<Vector2>();
-        userInput.z = userInput.y;
-        userInput.y = 0;
         userInput.Normalize();
     }
 }
