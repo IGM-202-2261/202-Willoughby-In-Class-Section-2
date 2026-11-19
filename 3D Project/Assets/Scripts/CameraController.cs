@@ -8,6 +8,11 @@ public class CameraController : MonoBehaviour
 
     private float rotAngle = 0;
 
+    void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void OnLook(InputAction.CallbackContext ctx)
     {
         Vector2 lookInput = ctx.ReadValue<Vector2>();
